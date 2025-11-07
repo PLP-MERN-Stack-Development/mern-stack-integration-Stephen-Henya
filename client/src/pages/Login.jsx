@@ -21,10 +21,11 @@ export default function Login() {
 
   return (
     <form onSubmit={submit}>
-      <h2>Login</h2>
-      <div><input className="border rounded-xl bg-white p-6 text-center" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required /></div>
-      <div><input className="border rounded-xl bg-white p-6 text-center" placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} required /></div>
-      <button type="submit">Login</button>
+      <h2 className="text-xl text-center font-bold">Login to access the Content</h2>
+      <div className="grid w-full items-center columns-2 m-2">
+        <input className="border-2 border-black rounded-xl bg-white p-2.5 text-center m-1" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
+        <input className="border-2 border-black rounded-xl bg-white p-2.5 text-center m-1" placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} required /></div>
+      <button className="border-2 border-black rounded-xl p-0.5 text-lg flex justify-center bg-amber-400 hover:bg-amber-700" type="submit">Login</button>
     </form>
   );
 }
