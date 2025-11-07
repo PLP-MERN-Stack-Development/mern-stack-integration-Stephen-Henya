@@ -1,0 +1,28 @@
+{
+    // jsconfig for the client side of a MERN project (use in /client)
+    "compilerOptions": {
+        // ECMAScript target
+        "target": "ES2020",
+        // module resolution used by most bundlers
+        "module": "ESNext",
+        // JSX handling for React
+        "jsx": "react",
+        // Treat imports from "src/..." as absolute
+        "baseUrl": "src",
+        // Helpful path aliases; adjust to match your folder layout
+        "paths": {
+            "@components/*": ["components/*"],
+            "@pages/*": ["pages/*"],
+            "@utils/*": ["utils/*"],
+            "@hooks/*": ["hooks/*"],
+            "@assets/*": ["assets/*"]
+        },
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "lib": ["DOM", "ES2020"]
+    },
+    // Include your source files
+    "include": ["src/**/*"],
+    // Exclude things you don't want the language server to parse
+    "exclude": ["node_modules", "dist", "build"]
+}

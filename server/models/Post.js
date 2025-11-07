@@ -10,7 +10,8 @@ const PostSchema = new mongoose.Schema(
       trim: true,
       maxlength: [100, 'Title cannot be more than 100 characters'],
     },
-    content: {
+    // body is used by the frontend (client expects `post.body`)
+    body: {
       type: String,
       required: [true, 'Please provide content'],
     },
@@ -32,11 +33,13 @@ const PostSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
-      required: true,
-    },
+    // support multiple categories (frontend sends an array)
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+      }
+    ],
     tags: [String],
     isPublished: {
       type: Boolean,
@@ -66,18 +69,19 @@ const PostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Create slug from title before saving
-PostSchema.pre('save', function (next) {
-  if (!this.isModified('title')) {
-    return next();
+// Ensure slug is created from title before validation so Mongoose sees it
+PostSchema.pre('validate', function (next) {
+  try {
+    if ((!this.slug || this.slug.length === 0) && this.title) {
+      this.slug = this.title
+        .toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-');
+    }
+    next();
+  } catch (err) {
+    next(err);
   }
-  
-  this.slug = this.title
-    .toLowerCase()
-    .replace(/[^\w ]+/g, '')
-    .replace(/ +/g, '-');
-    
-  next();
 });
 
 // Virtual for post URL
